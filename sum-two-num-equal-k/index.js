@@ -3,38 +3,19 @@
 // For example, given [10, 15, 3, 7] and k of 17, return true since 10 + 7 is 17.
 
 const sum = (numbers, k) => {
-  let left = 0;
-  let right = numbers.length - 1;
+  const map = {};
+  const pairs = [];
 
-  if (numbers[left] + numbers[right] === k) {
-    return [numbers[left], numbers[right]];
-  }
-
-  console.log(left, right);
-
-  while (left < right && left < numbers.length && right >= 0) {
-    console.log(`Left ${numbers[left]} & Right ${numbers[right]}`);
-
-    if (numbers[left] + numbers[right] === k) {
-      console.log([numbers[left], numbers[right]]);
+  for (const num of numbers) {
+    const temp = k - num;
+    if (map[temp]) {
+      pairs.push([temp, num]);
     }
 
-    if (numbers[left] + numbers[right] > k) {
-      if (numbers[left] > numbers[right]) {
-        left++;
-      } else {
-        right--;
-      }
-    } else {
-      if (numbers[left] > numbers[right]) {
-        left--;
-      } else {
-        right++;
-      }
-    }
+    map[num] = 1;
   }
 
-  return -1;
+  return pairs.length ? pairs : -1;
 };
 
 const inputs = [
@@ -52,8 +33,6 @@ const inputs = [
   },
 ];
 
-// for (const { numbers, k } of inputs) {
-//   console.log(sum(numbers, k));
-// }
-
-sum([5, 2, 4, 1, 7, 8, 9], 9);
+for (const { numbers, k } of inputs) {
+  console.log(sum(numbers, k));
+}
