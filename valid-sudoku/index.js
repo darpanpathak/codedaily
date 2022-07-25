@@ -128,3 +128,34 @@ const InputForInValid = [
 
 console.log(isValidSudoku(InputForValid));
 console.log(isValidSudoku(InputForInValid));
+
+var isValidSudoku = function (board) {
+  let rows = {};
+  let cols = {};
+  let boxs = {};
+
+  for (let r = 0; r < 9; r++) {
+    for (let c = 0; c < 9; c++) {
+      let num = board[r][c];
+
+      if (num === '.') continue;
+
+      let grid = `${Math.floor(r / 3)}${Math.floor(c / 3)}`;
+
+      if (!rows[r]) rows[r] = new Set();
+      if (!cols[c]) cols[c] = new Set();
+      if (!boxs[grid]) boxs[grid] = new Set();
+
+      if (rows[r].has(num) || cols[c].has(num) || boxs[grid].has(num)) {
+        return false;
+      }
+
+      rows[r].add(num);
+      cols[c].add(num);
+      boxs[grid].add(num);
+    }
+  }
+
+  //if there is no repetion that mean the sodoku is valid retrun true
+  return true;
+};
